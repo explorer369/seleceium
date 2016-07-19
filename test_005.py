@@ -1,0 +1,42 @@
+﻿# -*- coding: utf-8 -*-
+import os,sys,time,re,xlrd
+import log,logging
+import unittest
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+import time
+global driver,Testtime
+optpath = os.getcwd()
+PATH = lambda p: os.path.abspath(
+    os.path.join(os.path.dirname(__file__), p)
+)
+class AndroidTest(unittest.TestCase): 
+    func = getattr(__import__('find'),'find_name')
+#    func = getattr(__import__('func'),'find_name')
+    def setUp(self):     
+        try: #下面三句解决报错“您使用的是不受支持的命令行标记:--ignore-certificate-errors。稳定性和安全性会有所下降”
+            options = webdriver.ChromeOptions()
+            options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors"])
+            self.driver = webdriver.Chrome(chrome_options=options,executable_path="C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe")
+            self.driver.get("http://m12308.f3322.net:8070/login.html")
+        except Exception,e:
+            print u'Chrome路错误'
+    def tearDown(self):
+        self.driver.close()
+        self.driver.quit()     
+    def test12308click(self):
+        self.driver.delete_all_cookies()
+        elem = self.driver.find_element_by_name("username") 
+        elem.send_keys("18975428751" + Keys.RETURN)
+        elem = self.driver.find_element_by_name("password") 
+        elem.send_keys("881218" + Keys.RETURN)                 
+        self.func("xpath","//input[@id='startLogin']")
+        #self.func('css_selector','li.submenu.open > ul > li > a > span')
+       # self.func('xpath','//li[2]/ul/li/a/span')#点击添加线路
+        #添加上车点
+       # self.func('id','lbtnadd_s')
+        self.func('link',u'查看班次')
+        time.sleep(6)
+
