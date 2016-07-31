@@ -1,0 +1,3 @@
+# 设置未找到元素时是否继续执行，verify跳过 assert中止,当设为verify时用例下一点要添加断言，否则结果显示为PASS
+[AssertionMode]
+command:assert

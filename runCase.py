@@ -1,10 +1,8 @@
 #_*_coding:gb2312
-import glob
-import log,logging,gettime
+import log,logging,gettime,glob,unittest
 from appium import webdriver
-import unittest
 import os,sys,time,re,xlrd
-import HTMLTestRunner
+import HTMLTestRunner # 如果使用GBK就在 766，772改为相应的编码格式
 from find import *
 reload(sys)
 sys.setdefaultencoding('GBK')
@@ -25,7 +23,6 @@ def load_tests():
 if __name__ == '__main__':
     try:
         if  gettime.EffectiveTime()==True:     #联网验证日期是否过期
-            cleanEnv() # 清除件和新建文件 
             timestr = time.strftime('%Y%m%d%H%M%S',time.localtime(time.time()))
             filename ='result_'+ timestr + '.html'   
             fp =open(filename,'wb')
